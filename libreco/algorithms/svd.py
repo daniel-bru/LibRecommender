@@ -115,7 +115,7 @@ class SVD(Base, TfMixin, EvalMixin):
         else:
             total_loss = self.loss
 
-        optimizer = tf.train.AdamOptimizer(self.lr)
+        optimizer = tf.keras.optimizers.Adamax(self.lr)
         self.training_op = optimizer.minimize(total_loss)
         self.sess.run(tf.global_variables_initializer())
 
