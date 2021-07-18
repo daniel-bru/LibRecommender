@@ -116,7 +116,7 @@ class SVD(Base, TfMixin, EvalMixin):
         else:
             total_loss = self.loss
 
-        optimizer = tf.train.AdadeltaOptimizer(self.lr)
+        optimizer = tf.train.GradientDescentOptimizer(self.lr)
         self.training_op = optimizer.minimize(total_loss)
         self.sess.run(tf.global_variables_initializer())
 
