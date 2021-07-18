@@ -102,8 +102,6 @@ class SVD(Base, TfMixin, EvalMixin):
             pred = self.output + self.global_mean
             self.loss = tf.losses.mean_squared_error(labels=self.labels,
                                                      predictions=pred)
-            with tf.GradientTape() as tape:
-                tape.watch(self.loss)
             
         elif self.task == "ranking":
             # logits = tf.reshape(self.output, [-1])
@@ -118,8 +116,8 @@ class SVD(Base, TfMixin, EvalMixin):
         else:
             total_loss = self.loss
 
-        optimizer = tf.keras.optimizers.Adamax(self.lr)
-        self.training_op = optimizer.minimize(total_loss, var_list=None, tape=tape)
+        optimizer = tf.train.AdagradOptimizer(self.lr)
+        self.training_op = optimizer.minimize(total_loss)
         self.sess.run(tf.global_variables_initializer())
 
     def fit(self, train_data, verbose=1, shuffle=True,
