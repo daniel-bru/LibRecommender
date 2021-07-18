@@ -35,6 +35,8 @@ class SVD(Base, TfMixin, EvalMixin):
             embed_size=16,
             n_epochs=20,
             lr=0.01,
+            beta1 = 0.9
+            beta2 = 0.999
             reg=None,
             batch_size=256,
             batch_sampling=False,
@@ -52,6 +54,8 @@ class SVD(Base, TfMixin, EvalMixin):
         self.embed_size = embed_size
         self.n_epochs = n_epochs
         self.lr = lr
+        self.beta2 = beta2
+        self.beta1 = beta1
         self.reg = reg_config(reg)
         self.batch_size = batch_size
         self.batch_sampling = batch_sampling
@@ -116,7 +120,7 @@ class SVD(Base, TfMixin, EvalMixin):
         else:
             total_loss = self.loss
 
-        optimizer = tf.train.ProximalAdagradOptimizer(self.lr)
+        optimizer = tf.train.AdamOptimizer(self.lr, beta1=self.beta1, beta2=self.beta2)
         self.training_op = optimizer.minimize(total_loss)
         self.sess.run(tf.global_variables_initializer())
 
