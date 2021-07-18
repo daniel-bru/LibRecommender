@@ -35,8 +35,8 @@ class SVD(Base, TfMixin, EvalMixin):
             embed_size=16,
             n_epochs=20,
             lr=0.01,
-            beta1 = 0.9
-            beta2 = 0.999
+            beta1 = 0.9,
+            beta2 = 0.999,
             reg=None,
             batch_size=256,
             batch_sampling=False,
